@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	번호 : <input type="text" name="empno" id="empno" value="1"><br>
+	이름 : <input type="text" name="empname" id="empname" value="홍길동"><br>
+	직업 : <input type="text" name="empjob" id="empjob" value="사장"><br>
+	MGR : <input type="text" name="empmgr" id="empmgr" value="MGR"><br>
+	입사 : <input type="text" name="hiredate" id="hiredate" value="12"><br>
+	SAL : <input type="text" name="sal" id="sal" value="SAL"><br>
+	성별 : <select name="trans" id="trans">
+			<option value="1">남</option>
+			<option value="2">녀</option>
+		</select><br>
+		<button data-json="/json/server/emp.jsp">회원가입</button>
+		<script>
+		var btns = document.querySelectorAll('button[data-json]');
+		for(var i=0;i<btns.length;i++){
+			var btn = btns[i];
+			btn.onclick = function() {
+				var url = this.getAttribute('data-json');
+				var xhr = new XMLHttpRequest();
+				var empno = document.querySelector('#empno').value;
+				var empname = document.querySelector('#empname').value;
+				var empjob = document.querySelector('#empjob').value;
+				var empmgr = document.querySelector('#empmgr').value;
+				var hiredate = document.querySelector('#hiredate').value;
+				var sal = document.querySelector('#sal').value;
+				var trans = document.querySelector('#trans').value;
+				var param = {empno:empno, empname:empname, empjob:empjob, empmgr:empmgr, hiredate:hiredate, sal:sal};
+				param = JSON.stringify(param);
+				xhr.onreadystatechange = function(){
+					if(xhr.readyState==xhr.DONE)
+						if(xhr.status==200){
+							alert(xhr.responseText)	
+						}else{
+							alert("실패");
+						}
+				}
+					xhr.open('GET', url + '?param=' + encodeURIComponent(param));
+					xhr.send();
+					alert(1);
+				
+				
+			}
+		}
+		</script>
+	
+	
+	
+</body>
+</html>

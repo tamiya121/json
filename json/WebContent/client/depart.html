@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div id="rDiv">
+		<table border="1">
+			<thead>
+				<tr>
+					<th>번호</th>
+					<th>코드</th>
+					<th>이름</th>
+					<th>비고</th>
+				</tr>
+
+				<!-- 여기가 beforebegin -->
+			<tbody id="rBody">
+				<!-- 여기가 afterbegin -->
+
+				<!-- 여기로 완성된 데이터가 옴! -->
+
+				<!-- 여기가 beforeend -->
+			</tbody>
+			<!-- 여기가 afterend -->
+
+
+		</table>
+	</div>
+	검색 : 
+	<input type="text" name="search" id="search" placeholder="">
+	<!-- 
+	<br> 부서명 :
+	<input type="text" name="diname" id="diname" value="홍길동">
+	<br> 부서분류 :
+	<select name="ditype" id="ditype">
+		<option value="1">디자인</option>
+		<option value="2">인사</option>
+		<option value="3">경영</option>
+		<option value="4" selected>개발</option>
+	</select>
+	-->
+	<br>
+	<button data-json="/json/server/depart.jsp">부서등록</button>
+	<script>
+		//버튼 onclick이벤트 정의 영역
+		var btns = document.querySelectorAll('button[data-json]');
+		
+		for (var i = 0; i < btns.length; i++) {
+			
+			var btn = btns[i];
+			
+			btn.onclick = 
+				function() {
+				
+				var url = this.getAttribute('data-json');
+				
+				var search = document.querySelector('#search').value;
+				
+				var param = {
+					diName : search
+				};
+				//JSON의 형태 {KEY : VALUE}
+				
+				alert(JSON.stringify(param));
+				param = JSON.stringify(param);
+
+				//AJAX 영역
+				var xhr = new XMLHttpRequest();
+				xhr.onreadystatechange = 
+					function() {
+					if (xhr.readyState == xhr.DONE)
+						if (xhr.status == 200) {
+							var res = JSON.parse(xhr.responseText);
+						
+							var rBody = document.querySelector("#rBody");
+							for (var i = 0; i < res.length; i++) {
+								var html = "<tr>";
+								html += "<td>" + res[i].diNum + "</td>";
+								html += "<td>" + res[i].diCode + "</td>";
+								html += "<td>" + res[i].diName + "</td>";
+								html += "<td>" + res[i].diDesc + "</td>";
+								html += "</tr>";
+								rBody.insertAdjacentHTML("afterbegin", html);
+							}
+						} else {
+							alert("실패");
+						}
+				}
+				
+				
+				xhr.open('GET', url + '?param=' + encodeURIComponent(param));
+				xhr.send();
+			}
+		}
+	</script>
+</body>
+</html>
