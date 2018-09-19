@@ -54,10 +54,11 @@ public class Depart {
 }
 %>
 <%
-String param = request.getParameter("param");
-System.out.print(param);
+//String params = request.getParameter("params");
+//System.out.print(params);
 Gson gson = new Gson();
-DepartInfo dp = gson.fromJson(param, DepartInfo.class);
+//DepartInfo dp = gson.fromJson(params, DepartInfo.class);
+DepartInfo dp = gson.fromJson(request.getReader(), DepartInfo.class);
 
 Connection con = DBCon.getCon();
 String sql = "select * from depart_info where diName like '%' || ? || '%' "; 

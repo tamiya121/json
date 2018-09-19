@@ -58,13 +58,13 @@
 				
 				var search = document.querySelector('#search').value;
 				
-				var param = {
+				var params = {
 					diName : search
 				};
 				//JSON의 형태 {KEY : VALUE}
 				
-				alert(JSON.stringify(param));
-				param = JSON.stringify(param);
+				alert(JSON.stringify(params));
+				param = JSON.stringify(params);
 
 				//AJAX 영역
 				var xhr = new XMLHttpRequest();
@@ -90,7 +90,7 @@
 				}
 				
 				
-				xhr.open('GET', url + '?param=' + encodeURIComponent(param));
+				xhr.open('GET', url + '?params=' + encodeURIComponent(params));
 				xhr.send();
 			}
 		}
