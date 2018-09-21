@@ -5,11 +5,11 @@
 var AjaxUtil = function(conf) {
 	var method = conf.method ? conf.method : 'GET';
 	var url = conf.url;
-	var params = JSON.stringify(conf.params);
+	var params = conf.params?JSON.stringify(conf.params):'';
 	var type = conf.type ? conf.type : 'json';
 
 	var comErr = function(res) {
-		alert(res);
+		alert('[Error code:' + res.errCode + '] : ' + res.errMsg);
 	}
 	var comCb = function(res) {
 		alert(res);
@@ -36,10 +36,13 @@ var AjaxUtil = function(conf) {
 
 	this.send = function() {
 		if(method=='GET'){
-			url += '?params=' + encodeURIComponent(JSON.stringify(params));
+			url += '?params=' + encodeURIComponent(params);
+			xhr.open(method, url);
+			xhr.send();
+		}else {
+			xhr.open(method, url);
+			xhr.send(params);
 		}
-		xhr.open(method, url);
-		xhr.send(params);
 	}
 
 }

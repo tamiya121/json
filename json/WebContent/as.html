@@ -14,6 +14,9 @@
 	au.send();
 	var au = new AjaxUtil({url:'/json/json/member',cb:callback});
 	au.send();
+	var au = new AjaxUtil({url:'/json/json/ticket',cb:callback});
+	au.send();
+	
 	
 	function callback(res){
 		var diList = JSON.parse(res);
